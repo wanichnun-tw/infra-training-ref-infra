@@ -26,5 +26,28 @@ module "vpc" {
   public_subnets = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
   public_subnet_tags = merge(local.tags, {
     Name = "${local.name}-public"
+    type = "private"
   })
+
+  private_subnets = [
+    # Private subnets for EKS Control Plane
+    "10.0.104.0/24","10.0.105.0/24","10.0.106.0/24",
+    # Private subnets for EKS Nodes
+    "10.0.108.0/23", "10.0.110.0/23","10.0.112.0/23",
+  ]
+  private_subnet_tags = merge(local.tags, {
+    Name = "${local.name}-private"
+    type = "private"
+  })
+
+
+  # One NAT per Az
+  enable_nat_gateway = true
+  single_nat_gateway = false
+  one_nat_gateway_per_az = true
+
+}
+locals {
+  eks_master_subnets = slice(module.vpc.private_subnets,0,3)
+  eks_node_subnets = slice(module.vpc.private_subnets,3,6)
 }
