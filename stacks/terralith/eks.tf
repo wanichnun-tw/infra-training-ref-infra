@@ -66,11 +66,17 @@ module "eks" {
     Name = local.name
   })
 
-  # Todo create private subnets for EKS Master
   vpc_id     = module.vpc.vpc_id
   subnet_ids = local.eks_master_subnets
 
   manage_aws_auth_configmap = true
+  aws_auth_roles = [
+    {
+      rolearn  = aws_iam_role.eks-admin.arn
+      username = "admin"
+      groups   = ["system:masters"]
+    },
+  ]
 
   # Extend cluster security group rules
   cluster_security_group_additional_rules = {
@@ -511,3 +517,19 @@ data "aws_ami" "eks_default_bottlerocket" {
 #  }
 #}
 
+resource "aws_iam_role" "eks-admin" {
+  name = "${local.name}-eks-admin"
+  description = "Role to assume to administer the cluster"
+  assume_role_policy = data.aws_iam_policy_document.assume-eks-admin.json
+}
+
+data "aws_iam_policy_document" "assume-eks-admin" {
+  version = "2012-10-17"
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "AWS"
+      identifiers = [format("arn:aws:iam::%s:root",data.aws_caller_identity.current.account_id)]
+    }
+  }
+}
