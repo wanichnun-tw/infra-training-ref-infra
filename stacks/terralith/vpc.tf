@@ -40,6 +40,15 @@ module "vpc" {
     type = "private"
   })
 
+  database_subnets = [
+    # Private subnets for EKS Nodes
+    "10.0.114.0/26", "10.0.114.64/26","10.0.114.128/26",
+  ]
+  database_subnet_tags = merge(local.tags, {
+    Name = "${local.name}-db"
+    type = "db"
+  })
+
 
   # One NAT per Az
   enable_nat_gateway = true
