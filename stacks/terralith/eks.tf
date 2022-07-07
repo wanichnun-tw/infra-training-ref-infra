@@ -533,3 +533,15 @@ data "aws_iam_policy_document" "assume-eks-admin" {
     }
   }
 }
+
+locals {
+  application-ns-name = "application"
+}
+resource "kubernetes_namespace_v1" "application" {
+  metadata {
+    labels = merge(local.tags,{
+      owner = "terraform"
+    })
+    name = local.application-ns-name
+  }
+}

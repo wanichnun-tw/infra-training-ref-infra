@@ -18,7 +18,7 @@ module "cluster" {
   db_subnet_group_name = module.vpc.database_subnet_group_name
   subnets = module.vpc.database_subnets
 
-#  allowed_security_groups = ["sg-12345678"]
+  allowed_security_groups = [module.eks.node_security_group_id]
   allowed_cidr_blocks     = ["10.0.0.0/20"]
 
   storage_encrypted   = true
@@ -49,4 +49,15 @@ resource "aws_rds_cluster_parameter_group" "db" {
   tags = merge(local.tags, {
     Name: local.db_name
   })
+}
+
+resource "kubernetes_secret_v1" "app-a-rds-creds" {
+  metadata {
+    name = "app-a-db"
+    namespace = local.application-ns-name
+  }
+  data = {
+    username = module.cluster.cluster_master_username
+    password = module.cluster.cluster_master_password
+  }
 }
