@@ -20,7 +20,7 @@ export TF_VAR_team_name=team123
 ## Init
 ```bash
 cd stacks/terralith
-terraform init -backend-config="key=$TF_VAR_team_name/dev/terralith"
+terraform init -backend-config="key=${TF_VAR_team_name}/dev/terralith"
 ```
 
 ## Plan & Apply
