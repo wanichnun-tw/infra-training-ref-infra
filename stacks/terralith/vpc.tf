@@ -26,7 +26,7 @@ module "vpc" {
   public_subnets = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
   public_subnet_tags = merge(local.tags, {
     Name = "${local.name}-public"
-    type = "private"
+    type = "public"
   })
 
   private_subnets = [

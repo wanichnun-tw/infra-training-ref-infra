@@ -57,6 +57,8 @@ resource "kubernetes_secret_v1" "app-a-rds-creds" {
     namespace = local.application-ns-name
   }
   data = {
+    name = module.cluster.cluster_database_name
+    endpoint = module.cluster.cluster_endpoint
     username = module.cluster.cluster_master_username
     password = module.cluster.cluster_master_password
   }
