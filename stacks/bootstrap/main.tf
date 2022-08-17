@@ -41,3 +41,7 @@ resource "aws_iam_user_policy" "push-to-ecr" {
 resource "aws_ecr_repository" "sample-ap-a" {
   name = "infra-training-sample-app-a"
 }
+
+resource "aws_ecr_repository" "test-pod" {
+  name = "infra-training-test-pod"
+}

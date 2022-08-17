@@ -1,0 +1,34 @@
+# infra-training-ref-infra
+Reference implementation for Infra Training
+
+### Pre-Start
+1. Ensure your aws credentials and token are set in your local environment.
+Ref: https://blog.thoughtworks.net/freddy-escobar/how-to-access-aws-account-with-aws-sso-okta
+2. Export a unique team_name env var, this team_name is used to isolate your terraform from others.
+```bash
+export TF_VAR_team_name=team123
+```
+
+### Init, Plan and Apply
+```bash
+cd stacks/terralith
+<<<<<<< Updated upstream:README.md
+terraform init -backend-config="key=${TF_VAR_team_name}/dev/terralith"
+=======
+terraform init -backend-config="key=$TF_VAR_team_name/dev/terralith"
+terraform apply --var-file=dev.tfvars
+>>>>>>> Stashed changes:README.markdown
+```
+
+### Test
+1. Ensure you have created and set the K8s context to the EKS Cluster created as part of this project.
+```bash
+aws eks update-kubeconfig --region ap-southeast-1 --name <cluster_name> --role-arn <cluster_admin_role_arn>
+# aws eks update-kubeconfig --region ap-southeast-1 --name ankit-dev-terralith --role-arn arn:aws:iam::911960542707:role/ankit-dev-terralith-eks-admin
+```
+2. CD into the test directory and run the tests
+```bash
+cd tests
+go test 
+```
+

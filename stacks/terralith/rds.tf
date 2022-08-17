@@ -18,7 +18,7 @@ module "cluster" {
   db_subnet_group_name = module.vpc.database_subnet_group_name
   subnets = module.vpc.database_subnets
 
-  allowed_security_groups = [module.eks.node_security_group_id]
+  allowed_security_groups = [module.eks.cluster_primary_security_group_id]
   allowed_cidr_blocks     = ["10.0.0.0/20"]
 
   storage_encrypted   = true
@@ -57,9 +57,9 @@ resource "kubernetes_secret_v1" "app-a-rds-creds" {
     namespace = local.application-ns-name
   }
   data = {
-    name = module.cluster.cluster_database_name
-    endpoint = module.cluster.cluster_endpoint
-    username = module.cluster.cluster_master_username
-    password = module.cluster.cluster_master_password
+    db_name = module.cluster.cluster_database_name,
+    db_endpoint = module.cluster.cluster_endpoint,
+    db_username = module.cluster.cluster_master_username,
+    db_password = module.cluster.cluster_master_password,
   }
 }
