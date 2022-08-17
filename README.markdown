@@ -6,18 +6,14 @@ Reference implementation for Infra Training
 Ref: https://blog.thoughtworks.net/freddy-escobar/how-to-access-aws-account-with-aws-sso-okta
 2. Export a unique team_name env var, this team_name is used to isolate your terraform from others.
 ```bash
-export TF_VAR_team_name=team123
+export TF_VAR_team_name=lion
 ```
 
-### Init, Plan and Apply
+### Init, plan and apply
 ```bash
 cd stacks/terralith
-<<<<<<< Updated upstream:README.md
 terraform init -backend-config="key=${TF_VAR_team_name}/dev/terralith"
-=======
-terraform init -backend-config="key=$TF_VAR_team_name/dev/terralith"
 terraform apply --var-file=dev.tfvars
->>>>>>> Stashed changes:README.markdown
 ```
 
 ### Test
