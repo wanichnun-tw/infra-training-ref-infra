@@ -29,3 +29,5 @@ cd tests
 go test 
 ```
 
+## Architecture
+![](./arch.excalidraw.png)
