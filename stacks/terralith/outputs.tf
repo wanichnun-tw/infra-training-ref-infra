@@ -1,9 +1,6 @@
-output "eks_master_subnets" {
-  value = local.eks_master_subnets
+output "cluster_name" {
+  value = local.name
 }
-output "eks_node_subnets" {
-  value = local.eks_node_subnets
-}
-output "rds_endpoint" {
-  value = module.cluster.cluster_endpoint
+output "cluster_admin_role_arn" {
+  value = aws_iam_role.eks-admin.arn
 }

@@ -18,6 +18,7 @@ terraform apply --var-file=dev.tfvars
 
 ### Test
 1. Ensure you have created and set the K8s context to the EKS Cluster created as part of this project.
+These values should be available from the output of the terralith terraform project.
 ```bash
 aws eks update-kubeconfig --region ap-southeast-1 --name <cluster_name> --role-arn <cluster_admin_role_arn>
 # aws eks update-kubeconfig --region ap-southeast-1 --name ankit-dev-terralith --role-arn arn:aws:iam::911960542707:role/ankit-dev-terralith-eks-admin
