@@ -10,6 +10,7 @@ import (
 var clusterContext string
 
 // TestClusterRDSIntegration is a quick and dirty but effective test that validates if a test pod can reach and log into the RDS.
+// This test relies on the k8s config and context to be updated correctly externally to the test.
 func TestClusterRDSIntegration(t *testing.T) {
 
 	// namespace is hardcoded as a sort of convention between the underlying infra and the application layer.
